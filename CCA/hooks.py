@@ -57,3 +57,41 @@ def require_verified_customer(name, args, state):
         return {"error": "BLOCKED_CUSTOMER_MISMATCH",
                 "message": "Refunds may only go to the verified customer."}
     return None
+    
+# ---------------- refund policy (TS 1.5) ----------------
+REFUND_LIMIT = 500.00
+
+
+@pre_hook("refund_limit")
+def block_large_refunds(name, args, state):
+    if name == "process_refund" and float(args.get("amount", 0)) > REFUND_LIMIT:
+        return {"error": "BLOCKED_POLICY",
+                "message": f"Refunds over ${REFUND_LIMIT:.0f} need human approval. Do not retry. "
+                           "Call escalate_to_human with a complete handoff instead."}
+    return None
+
+# ---------------- data normalization (TS 1.5) ----------------
+from datetime import datetime, timezone
+
+STATUS_CODES = {1: "pending", 2: "shipped", 3: "delivered", 4: "delivered_damaged", 5: "cancelled"}
+SHIP_STATES = {"INT": "in_transit", "DLV": "delivered", "DMG": "damaged_in_transit", "RTO": "returned"}
+
+
+def _utc(dt):
+    return dt.astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+
+@post_hook("normalize")
+def normalize_formats(name, result, state):
+    r = dict(result)
+    if isinstance(r.get("created"), int):                       # Unix seconds
+        r["created"] = _utc(datetime.fromtimestamp(r["created"], tz=timezone.utc))
+    if isinstance(r.get("status"), int):                        # numeric status code
+        r["status"] = STATUS_CODES.get(r["status"], f"unknown({r['status']})")
+    if isinstance(r.get("placed_at"), str):                     # ISO with offset or Z
+        r["placed_at"] = _utc(datetime.fromisoformat(r["placed_at"].replace("Z", "+00:00")))
+    if "last_scan_ms" in r:                                     # epoch milliseconds
+        r["last_scan_at"] = _utc(datetime.fromtimestamp(r.pop("last_scan_ms") / 1000, tz=timezone.utc))
+    if r.get("state") in SHIP_STATES:                           # string carrier codes
+        r["state"] = SHIP_STATES[r["state"]]
+    return r
