@@ -3,7 +3,7 @@ The TOOLSET env var picks which tool list Claude sees (toolsets/<TOOLSET>.json).
 import json, os, re, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-REPO = os.path.abspath(os.path.join(HERE, "..", ".."))
+REPO = os.path.abspath(os.path.join(HERE, ".."))
 TOOLSET = json.load(open(os.path.join(HERE, "toolsets", os.environ["TOOLSET"] + ".json")))
 
 TASKS = [  # live task records (a stand-in for the database)
