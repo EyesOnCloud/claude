@@ -13,7 +13,7 @@
 import argparse, json, os, sys, urllib.error, urllib.request
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-REPO = os.path.abspath(os.path.join(HERE, "..", ".."))
+REPO = os.path.abspath(os.path.join(HERE, ".."))
 MAX_TURNS = 5
 USER_REQUEST = "Tell me about docs/CONCEPTS.md"
 SYSTEM = "You are a TaskFlow documentation assistant. Use the tools to enrich your answer."
