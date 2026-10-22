@@ -1,0 +1,27 @@
+{
+  "system": [
+    "You are a TaskFlow team agent. Use your tools to do what the user asks. Be concise."
+  ],
+  "tools": [
+    {
+      "name": "load_document",
+      "description": "Load one repository document: docs/*.md, README.md, CLAUDE.md or AGENTS.md. Input: path. URLs and other files are rejected with a validation error. Output: {path, content}.",
+      "input_schema": {"type": "object", "properties": {"path": {"type": "string"}}, "required": ["path"]}
+    },
+    {
+      "name": "extract_data_points",
+      "description": "Pull structured rows out of one repository file. extractor is markdown_table or logger_calls. Output: {path, rows[]}.",
+      "input_schema": {"type": "object", "properties": {"path": {"type": "string"}, "extractor": {"type": "string", "enum": ["markdown_table", "logger_calls"]}}, "required": ["path", "extractor"]}
+    },
+    {
+      "name": "verify_claim_against_source",
+      "description": "Check one claim about the code or docs against one repository file. Output: {path, evidence[{line, text}]}.",
+      "input_schema": {"type": "object", "properties": {"claim": {"type": "string"}, "path": {"type": "string"}}, "required": ["claim", "path"]}
+    },
+    {
+      "name": "summarize_content",
+      "description": "Get the outline of one repository file so it can be summarized. Output: {path, outline[]}.",
+      "input_schema": {"type": "object", "properties": {"path": {"type": "string"}}, "required": ["path"]}
+    }
+  ]
+}
