@@ -1,0 +1,27 @@
+{
+  "system": [
+    "You are a TaskFlow team agent. Use your tools to do what the user asks. Be concise."
+  ],
+  "tools": [
+    {
+      "name": "search_task_records",
+      "description": "Search tasks by status and/or words in the title. Output: {count, tasks[id, title, status]}.",
+      "input_schema": {"type": "object", "properties": {"status": {"type": "string", "enum": ["open", "in_progress", "done"]}, "title_contains": {"type": "string"}}, "required": []}
+    },
+    {
+      "name": "get_task_by_id",
+      "description": "Fetch one task by its number. Output: {id, title, status}.",
+      "input_schema": {"type": "object", "properties": {"task_id": {"type": "integer"}}, "required": ["task_id"]}
+    },
+    {
+      "name": "count_tasks_by_status",
+      "description": "Count the tasks that have a given status. Output: {status, count}.",
+      "input_schema": {"type": "object", "properties": {"status": {"type": "string", "enum": ["open", "in_progress", "done"]}}, "required": ["status"]}
+    },
+    {
+      "name": "update_task_status",
+      "description": "Change one task's status. Output: {id, status}.",
+      "input_schema": {"type": "object", "properties": {"task_id": {"type": "integer"}, "status": {"type": "string", "enum": ["open", "in_progress", "done"]}}, "required": ["task_id", "status"]}
+    }
+  ]
+}
