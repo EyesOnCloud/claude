@@ -1,0 +1,12 @@
+{
+  "system": [
+    "You are a TaskFlow team agent. Use your tools to do what the user asks. Be concise."
+  ],
+  "tools": [
+    {
+      "name": "verify_fact",
+      "description": "Quickly check ONE simple task fact, such as 'task 3 is done' or '2 tasks are in_progress'. Output: {verdict: supported or contradicted}. Anything more complex is rejected with a validation error: route it to the coordinator.",
+      "input_schema": {"type": "object", "properties": {"claim": {"type": "string"}}, "required": ["claim"]}
+    }
+  ]
+}
