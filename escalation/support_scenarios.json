@@ -1,0 +1,44 @@
+{
+  "explicit_human_request": {
+    "description": "Customer explicitly requests a human before any investigation.",
+    "customer_message": "I don't want to troubleshoot this anymore. Please transfer me to a human agent now.",
+    "case_context": "The issue concerns a standard order-status question. No investigation has been performed yet.",
+    "expected_decision": "Escalate immediately without investigating first."
+  },
+  "frustrated_simple_issue": {
+    "description": "Customer is frustrated, but the request is within policy and the customer has not requested a human.",
+    "customer_message": "This is ridiculous. I bought this from your own site 5 days ago for $120, and the current site price is $100. Fix it.",
+    "case_context": "Policy: Own-site price adjustments are permitted within 14 days when purchase evidence is available. The purchase is verified and was made 5 days ago. No competitor price match is requested.",
+    "expected_decision": "Acknowledge frustration and offer the permitted adjustment. Do not escalate solely due to sentiment."
+  },
+  "reiterated_human_request": {
+    "description": "Agent has offered a policy-supported resolution, but the customer then explicitly requests a human.",
+    "customer_message": "I understand the adjustment is possible, but I still want to speak with a human agent.",
+    "case_context": "The previous assistant offered a policy-supported own-site price adjustment. No human handoff has occurred.",
+    "expected_decision": "Honor the renewed request and escalate without arguing or continuing the attempted resolution."
+  },
+  "competitor_price_gap": {
+    "description": "The policy does not address competitor price matching.",
+    "customer_message": "A competitor sells this for $90. Match their price for me.",
+    "case_context": "Policy: Own-site price adjustments are permitted within 14 days when purchase evidence is available. The policy contains no rule for matching competitor prices.",
+    "expected_decision": "Do not promise a match. Escalate for a policy decision because the policy is silent on competitor matching."
+  },
+  "multiple_customer_matches": {
+    "description": "The customer lookup returns multiple plausible matches.",
+    "customer_message": "Please cancel Alex Sharma's order.",
+    "case_context": "Customer lookup result: three records match the name Alex Sharma. No order number, email address, or postcode was provided.",
+    "expected_decision": "Ask for an additional identifier. Do not choose a record or cancel an order yet."
+  },
+  "cannot_make_progress": {
+    "description": "The agent cannot determine a safe or authorized next step after checking available information.",
+    "customer_message": "Please make an exception and refund this charge. The reason doesn't fit any of the listed refund policies.",
+    "case_context": "Available policy does not cover this reason for a refund. No authorized exception procedure or approval is available in the supplied context.",
+    "expected_decision": "Explain the policy gap and escalate because meaningful progress requires a human policy decision."
+  },
+  "sentiment_is_not_complexity": {
+    "description": "Compare a frustrated straightforward request with a calm explicit human request.",
+    "customer_message": "I'm calm, but I want a human agent to handle this case.",
+    "case_context": "The customer explicitly requests a human. Case details have not been investigated.",
+    "expected_decision": "Escalate immediately because the customer requested a human, regardless of sentiment or perceived complexity."
+  }
+}
