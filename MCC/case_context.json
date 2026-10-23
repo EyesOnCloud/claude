@@ -1,0 +1,40 @@
+{
+  "case_facts": {
+    "order_id": "ORD-558102",
+    "charge_amount_usd": 487.32,
+    "charge_date": "2026-03-03",
+    "service_cancellation_date": "2026-02-28",
+    "delivery_date": "2026-05-08",
+    "items_in_order": 3,
+    "requested_refund_usd": 487.32,
+    "customer_expectation": "Refund confirmation by 2026-05-22",
+    "preferred_contact_method": "Email",
+    "return_status": "Not yet initiated"
+  },
+  "issues": [
+    {
+      "issue_id": "ISSUE-1",
+      "order_id": "ORD-558102",
+      "issue": "Disputed charge after service cancellation",
+      "amount_usd": 487.32,
+      "status": "Return not yet initiated",
+      "requested_resolution": "Refund",
+      "customer_expectation": "Refund confirmation by 2026-05-22"
+    },
+    {
+      "issue_id": "ISSUE-2",
+      "order_id": "ORD-558103",
+      "issue": "Missing item",
+      "order_amount_usd": 91.20,
+      "status": "Delivered",
+      "missing_item_value_usd": 18.40,
+      "requested_resolution": "Replacement",
+      "customer_expectation": "Replacement status update by 2026-05-24"
+    }
+  ],
+  "instructions": [
+    "Preserve exact amounts, dates, identifiers, statuses, and customer-stated expectations.",
+    "Keep facts for different orders separate.",
+    "Do not infer missing values."
+  ]
+}

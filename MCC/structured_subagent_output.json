@@ -1,0 +1,16 @@
+{
+  "finding": "The order is marked as delivered.",
+  "key_facts": {
+    "order_id": "ORD-558102",
+    "status": "delivered",
+    "delivered_on": "2026-05-08"
+  },
+  "source": {
+    "tool": "lookup_order",
+    "record_id": "ORD-558102",
+    "field": "status"
+  },
+  "observed_at": "2026-05-10",
+  "method": "Direct extraction from the order record",
+  "relevance_score": 0.98
+}
